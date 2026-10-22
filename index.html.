@@ -1,0 +1,255 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#0b1020">
+<title>Analytics Nexus | Centro de inteligencia comercial</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<style>
+:root{--bg:#0a0f1d;--side:#0d1424;--panel:#121c30;--panel2:#17243a;--line:rgba(191,211,255,.11);--txt:#f2f6ff;--muted:#93a3bf;--blue:#70a7ff;--cyan:#5eead4;--purple:#b5a0ff;--green:#5ee0a0;--yellow:#f8c96b;--red:#ff7e94;--radius:18px;--shadow:0 18px 50px rgba(0,0,0,.2)}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:radial-gradient(ellipse at 60% -20%,rgba(75,105,220,.17),transparent 40%),var(--bg);color:var(--txt);font:14px/1.5 Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif}button,input,select{font:inherit}button{cursor:pointer}a{color:inherit;text-decoration:none}.app{display:grid;grid-template-columns:248px minmax(0,1fr);min-height:100vh}.sidebar{background:rgba(12,19,34,.92);border-right:1px solid var(--line);padding:24px 16px;position:sticky;top:0;height:100vh;display:flex;flex-direction:column;z-index:5}.brand{display:flex;align-items:center;gap:11px;padding:0 9px 28px}.brand-icon{width:42px;height:42px;border-radius:14px;display:grid;place-items:center;font-size:22px;background:linear-gradient(140deg,#75b7ff,#8b6cff);box-shadow:0 8px 25px #557eff30}.brand strong{display:block;font-size:16px;letter-spacing:-.5px}.brand small{display:block;color:var(--muted);font-size:10px;letter-spacing:1.6px;text-transform:uppercase;margin-top:2px}.nav-label{font-size:10px;letter-spacing:1.8px;text-transform:uppercase;color:#71809d;padding:12px 12px 8px;font-weight:800}.nav{display:grid;gap:5px}.nav button{display:flex;align-items:center;gap:12px;width:100%;border:1px solid transparent;border-radius:12px;padding:12px;color:#aab8d0;background:transparent;text-align:left;font-weight:650;transition:.18s}.nav button .ico{width:22px;text-align:center;font-size:17px}.nav button:hover{background:#ffffff08;color:#fff}.nav button.active{color:white;background:linear-gradient(100deg,#4268c830,#8267ff18);border-color:#7799ff28;box-shadow:inset 3px 0 #83a9ff}.side-bottom{margin-top:auto}.side-tip{border:1px solid var(--line);background:linear-gradient(145deg,#17243a,#10192a);padding:15px;border-radius:15px;color:var(--muted);font-size:12px}.side-tip strong{display:block;color:#eaf0ff;font-size:13px;margin-bottom:5px}.side-foot{padding:15px 8px 0;color:#6f7f9c;font-size:11px}
+.main{min-width:0;padding:26px clamp(16px,3vw,38px) 42px;max-width:1600px;width:100%;margin:0 auto}.topbar{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:28px}.eyebrow{color:#9dbbff;text-transform:uppercase;letter-spacing:1.8px;font-size:10px;font-weight:850}.page-title{font-size:clamp(25px,3vw,34px);letter-spacing:-1.3px;margin:4px 0 3px;line-height:1.2}.subhead{color:var(--muted);margin:0;font-size:13px}.top-actions{display:flex;gap:10px;align-items:center;flex-wrap:wrap}.date-chip{display:flex;align-items:center;gap:8px;border:1px solid var(--line);border-radius:12px;padding:10px 13px;color:#c3cfe4;background:#ffffff04;font-size:12px}.btn{border:1px solid transparent;border-radius:11px;padding:10px 14px;font-weight:750;display:inline-flex;align-items:center;justify-content:center;gap:8px;transition:transform .18s,filter .18s}.btn:hover{transform:translateY(-1px);filter:brightness(1.08)}.primary{color:white;background:linear-gradient(120deg,#528bff,#8366f4);box-shadow:0 8px 24px #617dff24}.secondary{background:#ffffff07;color:#dfe8fb;border-color:var(--line)}.danger{background:#ff6b8314;color:#ff9aaa;border-color:#ff6b832a}.section{display:none;animation:appear .22s ease}.section.active{display:block}@keyframes appear{from{opacity:.4;transform:translateY(4px)}to{opacity:1;transform:none}}.panel{background:linear-gradient(145deg,rgba(20,31,52,.96),rgba(15,24,41,.97));border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);min-width:0}.section-head{display:flex;justify-content:space-between;align-items:end;gap:15px;margin:5px 0 20px}.section-head h2{margin:0;font-size:20px;letter-spacing:-.6px}.section-head p{margin:4px 0 0;color:var(--muted);font-size:12px}.kpis{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px;margin-bottom:17px}.kpi{padding:18px 18px 16px;position:relative;overflow:hidden}.kpi:after{content:"";position:absolute;width:95px;height:95px;right:-38px;top:-40px;border-radius:50%;background:var(--glow,#6d9dff);opacity:.1;filter:blur(5px)}.kpi-top{display:flex;align-items:center;justify-content:space-between;gap:8px;color:var(--muted);font-size:12px}.kpi-icon{width:34px;height:34px;border-radius:11px;display:grid;place-items:center;background:var(--iconbg,#75a7ff19);color:var(--icon,#91b6ff);font-size:17px}.kpi-value{font-size:clamp(22px,2.2vw,30px);font-weight:820;letter-spacing:-1px;margin:13px 0 4px;overflow-wrap:anywhere}.kpi-foot{font-size:11px;color:var(--muted)}.positive{color:var(--green)}.filters{display:flex;align-items:center;gap:9px;flex-wrap:wrap}.field{display:grid;gap:6px;min-width:0}.field label{color:#bac7dd;font-size:11px;font-weight:750}.field input,.field select,.field textarea{width:100%;background:#0b1425;border:1px solid #2b3b56;color:#eff4ff;border-radius:10px;padding:10px 11px;outline:none;min-width:0}.field input:focus,.field select:focus,.field textarea:focus{border-color:#83aaff;box-shadow:0 0 0 3px #78a5ff18}.filter-field{display:flex;align-items:center;gap:7px;color:var(--muted);font-size:12px}.filter-field input{background:#0b1425;border:1px solid var(--line);border-radius:9px;padding:8px;color:#e9f0ff}.chart-grid{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(280px,.85fr);gap:15px;margin-bottom:16px}.chart-panel{padding:19px 20px 16px}.panel-title{display:flex;justify-content:space-between;align-items:start;gap:10px;margin-bottom:15px}.panel-title h3{margin:0;font-size:14px}.panel-title p{margin:4px 0 0;color:var(--muted);font-size:11px}.legend-dot{width:8px;height:8px;display:inline-block;border-radius:50%;background:#77a9ff;margin-right:5px}.chart-wrap{height:260px;position:relative}.bottom-grid{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(270px,.8fr);gap:15px}.table-panel{overflow:hidden}.table-head{padding:18px 20px;display:flex;justify-content:space-between;align-items:center;gap:10px}.table-head h3{margin:0;font-size:14px}.table-scroll{overflow:auto}table{width:100%;border-collapse:collapse;white-space:nowrap}th{color:#8092af;text-align:left;text-transform:uppercase;letter-spacing:.7px;font-size:10px;font-weight:800;background:#ffffff03}th,td{padding:12px 18px;border-top:1px solid var(--line)}td{font-size:12px;color:#d8e2f4}td.muted{color:var(--muted)}.product-cell{display:flex;align-items:center;gap:10px}.product-icon{width:30px;height:30px;border-radius:9px;display:grid;place-items:center;background:#7da5ff13}.pill{display:inline-flex;align-items:center;border-radius:99px;padding:4px 8px;font-size:10px;font-weight:800}.pill.ok{color:#70e7ae;background:#48d59716}.pill.low{color:#ffd37b;background:#f6bd4d18}.pill.out{color:#ff93a4;background:#ff6b8317}.quick-list{padding:0 18px 12px}.quick-item{display:flex;align-items:center;gap:11px;padding:13px 0;border-top:1px solid var(--line)}.quick-item:first-child{border-top:0}.quick-icon{width:34px;height:34px;border-radius:11px;display:grid;place-items:center;background:#ffffff08}.quick-copy{flex:1;min-width:0}.quick-copy strong{display:block;font-size:12px}.quick-copy small{color:var(--muted);font-size:11px}.quick-value{font-size:12px;font-weight:800}.two-col{display:grid;grid-template-columns:minmax(0,1fr) minmax(300px,.72fr);gap:16px;align-items:start}.form-panel{padding:22px}.form-panel h3{margin:0 0 5px;font-size:16px}.form-panel>p{margin:0 0 20px;color:var(--muted);font-size:12px}.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:13px}.full{grid-column:1/-1}.form-actions{display:flex;gap:9px;flex-wrap:wrap;margin-top:17px}.notice{border:1px solid #7ca7ff28;background:#79a6ff0b;color:#aebfdd;padding:13px 14px;border-radius:12px;font-size:11px;margin-top:15px}.empty{text-align:center;padding:32px;color:var(--muted)}.empty strong{display:block;color:#e4ecfb;margin-bottom:5px}.table-toolbar{display:flex;align-items:center;gap:9px;flex-wrap:wrap}.table-toolbar input,.table-toolbar select{background:#0b1425;border:1px solid var(--line);border-radius:10px;padding:9px 11px;color:#e8efff}.small-btn{padding:6px 9px;border-radius:8px;font-size:11px}.inventory-layout{display:grid;grid-template-columns:minmax(0,1fr) 310px;gap:15px;align-items:start}.inventory-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:15px}.mini-stat{padding:15px}.mini-stat span{color:var(--muted);font-size:11px}.mini-stat strong{display:block;font-size:23px;margin-top:5px}.alert-box{padding:18px}.alert-box h3{margin:0 0 12px;font-size:14px}.alert-line{display:flex;gap:10px;padding:11px 0;border-top:1px solid var(--line);font-size:12px}.alert-line:first-of-type{border-top:0}.alert-line span{color:var(--muted)}.contact-intro{max-width:760px;color:var(--muted);margin:0 0 22px}.footer{border-top:1px solid var(--line);margin-top:34px;padding-top:20px;display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;color:#70809d;font-size:11px}.toast{position:fixed;bottom:22px;left:50%;transform:translate(-50%,15px);opacity:0;pointer-events:none;z-index:99;background:#1a2a43;border:1px solid #506788;color:#fff;padding:12px 17px;border-radius:12px;box-shadow:var(--shadow);transition:.2s;max-width:calc(100% - 28px)}.toast.show{opacity:1;transform:translate(-50%,0)}.mobile-menu{display:none}.muted{color:var(--muted)}
+@media(max-width:1150px){.app{grid-template-columns:215px minmax(0,1fr)}.kpis{grid-template-columns:repeat(2,minmax(0,1fr))}.bottom-grid{grid-template-columns:1fr}.inventory-layout{grid-template-columns:1fr 280px}}
+@media(max-width:800px){.app{display:block}.sidebar{position:sticky;top:0;height:auto;padding:10px 14px;border-right:0;border-bottom:1px solid var(--line);display:block;background:#0c1324f5;backdrop-filter:blur(16px)}.brand{padding:0 2px 10px}.brand-icon{width:36px;height:36px}.nav-label,.side-tip,.side-foot{display:none}.nav{display:flex;gap:5px;overflow-x:auto;padding-bottom:2px}.nav button{width:auto;flex:0 0 auto;padding:8px 10px;font-size:11px;gap:6px}.nav button .ico{font-size:14px;width:auto}.main{padding-top:20px}.topbar{align-items:flex-start}.chart-grid,.two-col,.inventory-layout{grid-template-columns:1fr}.top-actions{justify-content:flex-end}.date-chip{display:none}}
+@media(max-width:520px){.main{padding:17px 12px 30px}.topbar{display:block}.top-actions{margin-top:13px;justify-content:space-between}.page-title{font-size:26px}.kpis{gap:9px}.kpi{padding:13px}.kpi-value{font-size:21px}.kpi-top{font-size:10px}.kpi-icon{width:29px;height:29px}.chart-panel{padding:14px}.chart-wrap{height:230px}.form-grid{grid-template-columns:1fr}.full{grid-column:auto}.inventory-stats{gap:8px}.mini-stat{padding:11px}.mini-stat strong{font-size:20px}.section-head{align-items:flex-start;flex-direction:column}.filters{width:100%}.filter-field{flex-wrap:wrap}.footer{display:block}.footer div{margin-bottom:6px}}
+</style>
+</head>
+<body>
+<div class="app">
+  <aside class="sidebar">
+    <a class="brand" href="#dashboard" aria-label="Analytics Nexus inicio"><span class="brand-icon">✦</span><span><strong>Analytics Nexus</strong><small>Business intelligence</small></span></a>
+    <div class="nav-label">Espacio de trabajo</div>
+    <nav class="nav" aria-label="Menú principal">
+      <button class="active" data-page="dashboard"><span class="ico">▦</span>Dashboard</button>
+      <button data-page="ventas"><span class="ico">↗</span>Ventas</button>
+      <button data-page="inventario"><span class="ico">▤</span>Inventario</button>
+      <button data-page="reportes"><span class="ico">▧</span>Reportes</button>
+      <button data-page="acerca"><span class="ico">✦</span>Acerca del proyecto</button>
+    </nav>
+    <div class="side-bottom">
+      <div class="side-tip"><strong>✧ Una decisión informada</strong>Registra tus ventas y deja que los indicadores te ayuden a entender mejor tu negocio.</div>
+      <div class="side-foot">Proyecto académico · Bogotá, Bosa</div>
+    </div>
+  </aside>
+
+  <main class="main">
+    <header class="topbar">
+      <div><div class="eyebrow">Centro de inteligencia comercial</div><h1 class="page-title" id="pageTitle">Dashboard</h1><p class="subhead" id="pageSubtitle">Una visión rápida del rendimiento de tu negocio.</p></div>
+      <div class="top-actions"><span class="date-chip">◷ <span id="todayLabel">Hoy</span></span><button class="btn secondary" id="exportTop">⇩ Exportar CSV</button><button class="btn primary" data-goto="ventas">＋ Registrar venta</button></div>
+    </header>
+
+    <section class="section active" id="page-dashboard">
+      <div class="section-head"><div><h2>Resumen general</h2><p>Los indicadores se actualizan al registrar ventas o modificar inventario.</p></div><div class="filters"><label class="filter-field">Desde <input type="date" id="dateFrom"></label><label class="filter-field">Hasta <input type="date" id="dateTo"></label><button class="btn secondary" id="clearDates">Limpiar</button></div></div>
+      <div class="kpis">
+        <article class="panel kpi" style="--glow:#70a7ff;--icon:#94baff"><div class="kpi-top">Ingresos por ventas <span class="kpi-icon">＄</span></div><div class="kpi-value" id="kpiRevenue">$0</div><div class="kpi-foot">Total en el período seleccionado</div></article>
+        <article class="panel kpi" style="--glow:#5ee0a0;--icon:#68e8ad;--iconbg:#5ee0a018"><div class="kpi-top">Unidades vendidas <span class="kpi-icon">▦</span></div><div class="kpi-value" id="kpiUnits">0</div><div class="kpi-foot">Cantidad de artículos vendidos</div></article>
+        <article class="panel kpi" style="--glow:#b5a0ff;--icon:#c2b3ff;--iconbg:#b5a0ff18"><div class="kpi-top">Transacciones <span class="kpi-icon">⇄</span></div><div class="kpi-value" id="kpiTransactions">0</div><div class="kpi-foot">Registros de venta</div></article>
+        <article class="panel kpi" style="--glow:#f8c96b;--icon:#f8d27f;--iconbg:#f8c96b18"><div class="kpi-top">Valor promedio <span class="kpi-icon">◈</span></div><div class="kpi-value" id="kpiAverage">$0</div><div class="kpi-foot">Ingreso promedio por venta</div></article>
+      </div>
+      <div class="chart-grid">
+        <article class="panel chart-panel"><div class="panel-title"><div><h3>Ingresos a lo largo del tiempo</h3><p>Ventas agrupadas por día dentro del período.</p></div><span class="pill ok">Actualizado</span></div><div class="chart-wrap"><canvas id="salesChart"></canvas></div></article>
+        <article class="panel chart-panel"><div class="panel-title"><div><h3>Ventas por producto</h3><p>Productos con más unidades vendidas.</p></div></div><div class="chart-wrap"><canvas id="productChart"></canvas></div></article>
+      </div>
+      <div class="bottom-grid">
+        <article class="panel table-panel"><div class="table-head"><h3>Ventas recientes</h3><button class="btn secondary small-btn" data-goto="ventas">Ver todas ↗</button></div><div class="table-scroll"><table><thead><tr><th>Fecha</th><th>Producto</th><th>Cantidad</th><th>Total</th></tr></thead><tbody id="recentSales"></tbody></table></div></article>
+        <article class="panel"><div class="table-head"><h3>Estado del inventario</h3><button class="btn secondary small-btn" data-goto="inventario">Administrar ↗</button></div><div class="quick-list" id="inventorySummary"></div></article>
+      </div>
+    </section>
+
+    <section class="section" id="page-ventas">
+      <div class="section-head"><div><h2>Registro de ventas</h2><p>Registra una venta y actualiza automáticamente el dashboard.</p></div></div>
+      <div class="two-col">
+        <form class="panel form-panel" id="saleForm">
+          <h3>＋ Nueva venta</h3><p>Los datos se guardan en este navegador en este dispositivo.</p>
+          <div class="form-grid">
+            <div class="field full"><label for="saleProduct">Producto</label><select id="saleProduct" required></select></div>
+            <div class="field"><label for="saleQty">Cantidad</label><input id="saleQty" type="number" min="1" step="1" value="1" required></div>
+            <div class="field"><label for="salePrice">Precio unitario (COP)</label><input id="salePrice" type="number" min="0" step="100" required></div>
+            <div class="field full"><label for="saleDate">Fecha de la venta</label><input id="saleDate" type="date" required></div>
+          </div>
+          <div class="notice" id="saleStockNote">Selecciona un producto para ver sus existencias.</div>
+          <div class="form-actions"><button class="btn primary" type="submit">Guardar venta</button><button class="btn secondary" type="reset" id="resetSale">Limpiar formulario</button></div>
+        </form>
+        <article class="panel form-panel"><h3>Cómo funciona</h3><p>Un registro bien llevado te ayuda a reconocer patrones y tomar decisiones con más confianza.</p>
+          <div class="quick-item"><div class="quick-icon">↗</div><div class="quick-copy"><strong>1. Registra la operación</strong><small>Producto, cantidad, precio y fecha.</small></div></div>
+          <div class="quick-item"><div class="quick-icon">▦</div><div class="quick-copy"><strong>2. Se actualizan los indicadores</strong><small>Ingresos, unidades y gráficas cambian al guardar.</small></div></div>
+          <div class="quick-item"><div class="quick-icon">▤</div><div class="quick-copy"><strong>3. Se descuenta el inventario</strong><small>La cantidad disponible se reduce automáticamente.</small></div></div>
+          <div class="notice">Nota: el ingreso registrado es el valor de la venta; no equivale a utilidad neta, porque no se descuentan costos ni gastos.</div>
+        </article>
+      </div>
+      <article class="panel table-panel" style="margin-top:16px"><div class="table-head"><h3>Historial de ventas</h3><div class="table-toolbar"><input id="salesSearch" placeholder="Buscar producto…" aria-label="Buscar venta"><button class="btn secondary small-btn" id="exportSales">⇩ Descargar ventas</button></div></div><div class="table-scroll"><table><thead><tr><th>Fecha</th><th>Producto</th><th>Cantidad</th><th>Precio unitario</th><th>Total</th><th>Acción</th></tr></thead><tbody id="salesTable"></tbody></table></div></article>
+    </section>
+
+    <section class="section" id="page-inventario">
+      <div class="section-head"><div><h2>Inventario de productos</h2><p>Controla precios, existencias y productos que necesitan reposición.</p></div></div>
+      <div class="inventory-stats">
+        <article class="panel mini-stat"><span>Productos registrados</span><strong id="invCount">0</strong></article>
+        <article class="panel mini-stat"><span>Con pocas existencias</span><strong id="invLow">0</strong></article>
+        <article class="panel mini-stat"><span>Unidades en stock</span><strong id="invUnits">0</strong></article>
+      </div>
+      <div class="inventory-layout">
+        <article class="panel table-panel"><div class="table-head"><h3>Productos</h3><div class="table-toolbar"><input id="productSearch" placeholder="Buscar producto…" aria-label="Buscar producto"><button class="btn secondary small-btn" id="exportInventory">⇩ CSV</button></div></div><div class="table-scroll"><table><thead><tr><th>Producto</th><th>Precio</th><th>Existencias</th><th>Estado</th><th>Acciones</th></tr></thead><tbody id="inventoryTable"></tbody></table></div></article>
+        <form class="panel form-panel" id="productForm"><h3 id="productFormTitle">＋ Añadir producto</h3><p>Agrega un artículo o actualiza sus existencias.</p>
+          <div class="form-grid">
+            <div class="field full"><label for="productName">Nombre del producto</label><input id="productName" required placeholder="Ej. Café 250 g"></div>
+            <div class="field"><label for="productPrice">Precio unitario (COP)</label><input id="productPrice" type="number" min="0" step="100" required placeholder="4500"></div>
+            <div class="field"><label for="productStock">Unidades disponibles</label><input id="productStock" type="number" min="0" step="1" required placeholder="12"></div>
+            <div class="field full"><label for="productMin">Alerta de pocas existencias (mínimo)</label><input id="productMin" type="number" min="0" step="1" value="5" required></div>
+          </div>
+          <div class="form-actions"><button class="btn primary" type="submit" id="saveProductBtn">Guardar producto</button><button class="btn secondary" type="button" id="cancelEdit" hidden>Cancelar edición</button></div>
+          <div class="notice">Al vender un producto, el inventario se descuenta de forma automática. Puedes editar las existencias desde la tabla.</div>
+        </form>
+      </div>
+      <article class="panel alert-box" style="margin-top:16px"><h3>◉ Alertas de inventario</h3><div id="inventoryAlerts"></div></article>
+    </section>
+
+    <section class="section" id="page-reportes">
+      <div class="section-head"><div><h2>Reportes y exportaciones</h2><p>Descarga los datos registrados para analizarlos o compartirlos en Excel.</p></div></div>
+      <div class="features" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:15px">
+        <article class="panel form-panel"><div class="kpi-icon">↗</div><h3>Reporte de ventas</h3><p>Descarga el historial de ventas en CSV, compatible con Excel.</p><button class="btn primary" id="reportSales">Descargar ventas CSV</button></article>
+        <article class="panel form-panel"><div class="kpi-icon">▤</div><h3>Reporte de inventario</h3><p>Exporta productos, precios, existencias y niveles mínimos.</p><button class="btn primary" id="reportInventory">Descargar inventario CSV</button></article>
+        <article class="panel form-panel"><div class="kpi-icon">▦</div><h3>Resumen del negocio</h3><p>Consulta el total de ingresos, unidades y transacciones registradas.</p><div style="margin:12px 0"><div class="muted">Ingresos registrados</div><strong id="reportRevenue" style="font-size:23px">$0</strong></div><div><div class="muted">Transacciones</div><strong id="reportTransactions" style="font-size:23px">0</strong></div></article>
+      </div>
+      <div class="notice" style="margin-top:16px">Los archivos CSV se pueden abrir con Excel. Los registros se almacenan localmente en este navegador; exporta copias de seguridad con regularidad. Esta versión no sincroniza datos entre dispositivos.</div>
+      <article class="panel form-panel" style="margin-top:16px"><h3>Datos de demostración</h3><p>¿Quieres volver a cargar el ejemplo inicial? Esto reemplazará los registros actuales del navegador por los datos de muestra.</p><button class="btn danger" id="resetDemo">Restaurar datos de ejemplo</button></article>
+    </section>
+
+    <section class="section" id="page-acerca">
+      <div class="section-head"><div><h2>Acerca de Analytics Nexus</h2><p>Datos claros para negocios que quieren crecer.</p></div></div>
+      <div class="panel form-panel">
+        <div class="eyebrow">Nuestro propósito</div><h2 style="font-size:29px;margin:8px 0 12px">Transformamos datos en decisiones.</h2>
+        <p style="max-width:780px;color:var(--muted)">Analytics Nexus es un proyecto académico desarrollado por estudiantes de grado 11 del Liceo Alfredo Nobel, en articulación técnica con el SENA. La propuesta busca acercar herramientas de analítica de datos a tiendas y pequeños comercios de Bogotá, especialmente de la localidad de Bosa, para facilitar la comprensión de ventas e inventario.</p>
+        <div class="features" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:12px;margin-top:22px">
+          <div class="quick-item"><div class="quick-icon">📊</div><div class="quick-copy"><strong>Visualización</strong><small>Gráficas e indicadores fáciles de leer.</small></div></div>
+          <div class="quick-item"><div class="quick-icon">🧾</div><div class="quick-copy"><strong>Registro</strong><small>Historial de ventas e inventario local.</small></div></div>
+          <div class="quick-item"><div class="quick-icon">💡</div><div class="quick-copy"><strong>Decisiones</strong><small>Información para planear mejor.</small></div></div>
+        </div>
+        <div class="notice">Equipo del proyecto: Sergio Rincón, Juan Caicedo, Andrés Ruiz y Samuel Prieto. Puedes editar estos nombres en el HTML si necesitas actualizarlos.</div>
+      </div>
+    </section>
+
+    <footer class="footer"><div><strong style="color:#dce6f8">✦ Analytics Nexus</strong> · Analítica para negocios locales</div><div>Proyecto académico · Bogotá, localidad de Bosa</div><div>© <span id="year"></span> Analytics Nexus</div></footer>
+  </main>
+</div>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script>
+(() => {
+  const $ = id => document.getElementById(id);
+  const fmt = n => new Intl.NumberFormat('es-CO',{style:'currency',currency:'COP',maximumFractionDigits:0}).format(Number(n)||0);
+  const num = n => new Intl.NumberFormat('es-CO').format(Number(n)||0);
+  const todayISO = () => { const d=new Date(); d.setMinutes(d.getMinutes()-d.getTimezoneOffset()); return d.toISOString().slice(0,10); };
+  const dateLabel = iso => { if(!iso)return '—'; const [y,m,d]=iso.split('-'); return `${d}/${m}/${y}`; };
+  const escapeHTML = s => String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+  const seedProducts = [
+    {id:1,name:'Huevos',price:18000,stock:28,min:8,emoji:'🥚'},
+    {id:2,name:'Leche',price:4200,stock:18,min:6,emoji:'🥛'},
+    {id:3,name:'Pan',price:2500,stock:12,min:5,emoji:'🍞'},
+    {id:4,name:'Gaseosas',price:4500,stock:4,min:8,emoji:'🥤'},
+    {id:5,name:'Arroz',price:3200,stock:22,min:7,emoji:'🍚'},
+    {id:6,name:'Aceite de cocina',price:9500,stock:2,min:5,emoji:'🫗'}
+  ];
+  function sampleSales(){
+    const base=new Date(); const arr=[]; let id=1;
+    const entries=[['Huevos',4,18000,0],['Leche',3,4200,0],['Pan',5,2500,1],['Gaseosas',2,4500,1],['Arroz',6,3200,2],['Huevos',2,18000,3],['Leche',4,4200,4],['Pan',8,2500,5],['Arroz',3,3200,6],['Gaseosas',4,4500,6]];
+    entries.forEach(([product,qty,price,ago])=>{const d=new Date(base);d.setDate(d.getDate()-ago);arr.push({id:id++,product,qty,price,date:(()=>{d.setMinutes(d.getMinutes()-d.getTimezoneOffset());return d.toISOString().slice(0,10)})()});});
+    return arr;
+  }
+  let products, sales, editingProductId=null;
+  try { products=JSON.parse(localStorage.getItem('anx_products')); sales=JSON.parse(localStorage.getItem('anx_sales')); } catch(e) {}
+  if(!Array.isArray(products)||!Array.isArray(sales)){products=seedProducts.map(p=>({...p}));sales=sampleSales();localStorage.setItem('anx_products',JSON.stringify(products));localStorage.setItem('anx_sales',JSON.stringify(sales));}
+  const persist=()=>{localStorage.setItem('anx_products',JSON.stringify(products));localStorage.setItem('anx_sales',JSON.stringify(sales));};
+  const toast=msg=>{const el=$('toast');el.textContent=msg;el.classList.add('show');clearTimeout(toast.timer);toast.timer=setTimeout(()=>el.classList.remove('show'),3000);};
+  const productByName=name=>products.find(p=>p.name===name);
+  const saleTotal=s=>Number(s.qty)*Number(s.price);
+  const sortedSales=arr=>[...arr].sort((a,b)=>(b.date||'').localeCompare(a.date||'')||b.id-a.id);
+  const filteredSales=()=>{const from=$('dateFrom').value,to=$('dateTo').value;return sales.filter(s=>(!from||s.date>=from)&&(!to||s.date<=to));};
+  function save(){persist();renderAll();}
+  function statusFor(p){if(p.stock<=0)return ['Agotado','out'];if(p.stock<=p.min)return ['Pocas unidades','low'];return ['Disponible','ok'];}
+  function renderSaleSelect(){
+    const sel=$('saleProduct'), old=sel.value;
+    sel.innerHTML=products.map(p=>`<option value="${escapeHTML(p.name)}">${escapeHTML(p.name)} — ${fmt(p.price)} (stock: ${p.stock})</option>`).join('');
+    if(products.some(p=>p.name===old))sel.value=old;
+    updateSalePrice();
+  }
+  function updateSalePrice(){const p=productByName($('saleProduct').value);if(p){$('salePrice').value=p.price;$('saleStockNote').textContent=`Disponibles: ${p.stock} unidades · Al registrar la venta se descontará del inventario.`;}else{$('saleStockNote').textContent='Añade productos en Inventario antes de registrar ventas.';}}
+  function renderDashboard(){
+    const data=filteredSales(), revenue=data.reduce((a,s)=>a+saleTotal(s),0), units=data.reduce((a,s)=>a+Number(s.qty),0);
+    $('kpiRevenue').textContent=fmt(revenue);$('kpiUnits').textContent=num(units);$('kpiTransactions').textContent=num(data.length);$('kpiAverage').textContent=fmt(data.length?revenue/data.length:0);
+    $('reportRevenue').textContent=fmt(sales.reduce((a,s)=>a+saleTotal(s),0));$('reportTransactions').textContent=num(sales.length);
+    const byDate={}; data.forEach(s=>byDate[s.date]=(byDate[s.date]||0)+saleTotal(s));
+    let dates=Object.keys(byDate).sort();
+    if(dates.length>14)dates=dates.slice(-14);
+    if(!dates.length){dates=[todayISO()];byDate[dates[0]]=0;}
+    salesChart.data.labels=dates.map(dateLabel);salesChart.data.datasets[0].data=dates.map(d=>byDate[d]||0);salesChart.update();
+    const byProduct={};data.forEach(s=>byProduct[s.product]=(byProduct[s.product]||0)+Number(s.qty));
+    const entries=Object.entries(byProduct).sort((a,b)=>b[1]-a[1]).slice(0,6);
+    productChart.data.labels=entries.length?entries.map(x=>x[0]):['Sin ventas'];productChart.data.datasets[0].data=entries.length?entries.map(x=>x[1]):[0];productChart.update();
+    $('recentSales').innerHTML=sortedSales(data).slice(0,5).map(s=>`<tr><td class="muted">${dateLabel(s.date)}</td><td><div class="product-cell"><span class="product-icon">${(productByName(s.product)||{}).emoji||'📦'}</span>${escapeHTML(s.product)}</div></td><td>${num(s.qty)}</td><td>${fmt(saleTotal(s))}</td></tr>`).join('')||'<tr><td colspan="4" class="empty">No hay ventas en este período.</td></tr>';
+    const low=products.filter(p=>p.stock<=p.min);
+    $('inventorySummary').innerHTML=low.slice(0,4).map(p=>`<div class="quick-item"><div class="quick-icon">${p.stock<=0?'⚠️':'📦'}</div><div class="quick-copy"><strong>${escapeHTML(p.name)}</strong><small>${p.stock<=0?'Agotado':`${p.stock} unidades disponibles`}</small></div><span class="pill ${p.stock<=0?'out':'low'}">${p.stock<=0?'Reponer':'Bajo'}</span></div>`).join('')||'<div class="empty">Todo bien: no hay alertas de inventario.</div>';
+  }
+  function renderSales(){
+    const q=$('salesSearch').value.toLowerCase().trim();
+    const data=sortedSales(sales).filter(s=>s.product.toLowerCase().includes(q));
+    $('salesTable').innerHTML=data.map(s=>`<tr><td class="muted">${dateLabel(s.date)}</td><td>${escapeHTML(s.product)}</td><td>${num(s.qty)}</td><td>${fmt(s.price)}</td><td><strong>${fmt(saleTotal(s))}</strong></td><td><button class="btn danger small-btn" data-delete-sale="${s.id}">Eliminar</button></td></tr>`).join('')||'<tr><td colspan="6" class="empty">Todavía no hay ventas registradas.</td></tr>';
+  }
+  function renderInventory(){
+    const q=$('productSearch').value.toLowerCase().trim();
+    const data=products.filter(p=>p.name.toLowerCase().includes(q));
+    $('inventoryTable').innerHTML=data.map(p=>{const [label,cls]=statusFor(p);return `<tr><td><div class="product-cell"><span class="product-icon">${p.emoji||'📦'}</span><strong>${escapeHTML(p.name)}</strong></div></td><td>${fmt(p.price)}</td><td>${num(p.stock)}</td><td><span class="pill ${cls}">${label}</span></td><td><div style="display:flex;gap:5px"><button class="btn secondary small-btn" data-stock-down="${p.id}" title="Restar una unidad">−</button><button class="btn secondary small-btn" data-stock-up="${p.id}" title="Sumar una unidad">+</button><button class="btn secondary small-btn" data-edit-product="${p.id}">Editar</button><button class="btn danger small-btn" data-delete-product="${p.id}">×</button></div></td></tr>`}).join('')||'<tr><td colspan="5" class="empty">No se encontraron productos.</td></tr>';
+    $('invCount').textContent=products.length;$('invLow').textContent=products.filter(p=>p.stock<=p.min).length;$('invUnits').textContent=num(products.reduce((a,p)=>a+p.stock,0));
+    const alerts=products.filter(p=>p.stock<=p.min);
+    $('inventoryAlerts').innerHTML=alerts.map(p=>`<div class="alert-line"><span>${p.stock<=0?'🔴':'🟡'}</span><div style="flex:1"><strong>${escapeHTML(p.name)}</strong><br><span>${p.stock<=0?'No hay unidades disponibles':`Quedan ${p.stock} unidades; mínimo configurado: ${p.min}.`}</span></div><button class="btn secondary small-btn" data-edit-product="${p.id}">Revisar</button></div>`).join('')||'<div class="alert-line"><span>🟢</span><div><strong>Sin alertas</strong><br><span>Todos los productos están por encima de su mínimo.</span></div></div>';
+    renderSaleSelect();
+  }
+  function renderAll(){renderDashboard();renderSales();renderInventory();}
+  const chartText='#9aaac4',grid='rgba(184,203,235,.09)';
+  const salesChart=new Chart($('salesChart'),{type:'line',data:{labels:[],datasets:[{label:'Ingresos',data:[],borderColor:'#7ca7ff',backgroundColor:'rgba(112,167,255,.13)',fill:true,tension:.38,pointBackgroundColor:'#b6caff',pointBorderColor:'#17243a',pointBorderWidth:3,pointRadius:4,borderWidth:2.5}]},options:{responsive:true,maintainAspectRatio:false,interaction:{mode:'index',intersect:false},plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>` ${fmt(c.parsed.y)}`}}},scales:{x:{grid:{display:false},ticks:{color:chartText,maxRotation:0,autoSkip:true,maxTicksLimit:7}},y:{beginAtZero:true,grid:{color:grid},ticks:{color:chartText,callback:v=>v>=1000000?`$${(v/1000000).toFixed(1)}M`:v>=1000?`$${Math.round(v/1000)}k`:`$${v}`}}}}});
+  const productChart=new Chart($('productChart'),{type:'bar',data:{labels:[],datasets:[{data:[],backgroundColor:['#7ca7ff','#9a8cff','#5eead4','#f8c96b','#79dfad','#f48fb1'],borderRadius:7,borderSkipped:false,maxBarThickness:26}]},options:{indexAxis:'y',responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>` ${num(c.parsed.x)} unidades`}}},scales:{x:{beginAtZero:true,grid:{color:grid},ticks:{color:chartText,precision:0}},y:{grid:{display:false},ticks:{color:'#d6e0f3'}}}}});
+  const pageInfo={dashboard:['Dashboard','Una visión rápida del rendimiento de tu negocio.'],ventas:['Ventas','Registra operaciones y consulta el historial de ventas.'],inventario:['Inventario','Administra productos, precios y existencias.'],reportes:['Reportes','Exporta tus datos y conserva copias para Excel.'],acerca:['Acerca del proyecto','Conoce el propósito de Analytics Nexus.']};
+  function gotoPage(page){if(!pageInfo[page])return;document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));$('page-'+page).classList.add('active');document.querySelectorAll('[data-page]').forEach(b=>b.classList.toggle('active',b.dataset.page===page));$('pageTitle').textContent=pageInfo[page][0];$('pageSubtitle').textContent=pageInfo[page][1];window.scrollTo({top:0,behavior:'smooth'});if(page==='dashboard'){salesChart.resize();productChart.resize();}}
+  document.querySelectorAll('[data-page]').forEach(b=>b.addEventListener('click',()=>gotoPage(b.dataset.page)));
+  document.querySelectorAll('[data-goto]').forEach(b=>b.addEventListener('click',()=>gotoPage(b.dataset.goto)));
+  $('saleProduct').addEventListener('change',updateSalePrice);
+  $('saleForm').addEventListener('reset',()=>setTimeout(()=>{$('saleDate').value=todayISO();updateSalePrice();},0));
+  $('saleForm').addEventListener('submit',e=>{
+    e.preventDefault();const p=productByName($('saleProduct').value),qty=Number($('saleQty').value),price=Number($('salePrice').value),date=$('saleDate').value;
+    if(!p){toast('Primero registra un producto en Inventario.');return;}
+    if(!Number.isInteger(qty)||qty<1){toast('La cantidad debe ser al menos una unidad.');return;}
+    if(price<0||!Number.isFinite(price)){toast('Revisa el precio ingresado.');return;}
+    if(qty>p.stock){toast(`Stock insuficiente. Disponibles: ${p.stock}.`);return;}
+    sales.push({id:Date.now(),product:p.name,qty,price,date});p.stock-=qty;save();$('saleQty').value=1;toast('Venta guardada e inventario actualizado.');gotoPage('dashboard');
+  });
+  $('salesSearch').addEventListener('input',renderSales);$('productSearch').addEventListener('input',renderInventory);
+  document.addEventListener('click',e=>{
+    const delSale=e.target.closest('[data-delete-sale]');if(delSale){const id=Number(delSale.dataset.deleteSale),s=sales.find(x=>x.id===id);if(!s)return;if(!confirm('¿Eliminar esta venta? Se devolverán las unidades al inventario.'))return;const p=productByName(s.product);if(p)p.stock+=Number(s.qty);sales=sales.filter(x=>x.id!==id);save();toast('Venta eliminada y stock corregido.');return;}
+    const up=e.target.closest('[data-stock-up]');if(up){const p=products.find(x=>x.id===Number(up.dataset.stockUp));if(p){p.stock++;save();toast('Existencia actualizada.');}return;}
+    const down=e.target.closest('[data-stock-down]');if(down){const p=products.find(x=>x.id===Number(down.dataset.stockDown));if(p){if(p.stock<=0){toast('El stock ya está en cero.');return;}p.stock--;save();toast('Existencia actualizada.');}return;}
+    const edit=e.target.closest('[data-edit-product]');if(edit){startEdit(Number(edit.dataset.editProduct));return;}
+    const delProd=e.target.closest('[data-delete-product]');if(delProd){const p=products.find(x=>x.id===Number(delProd.dataset.deleteProduct));if(!p)return;if(sales.some(s=>s.product===p.name)){toast('No se puede borrar: este producto tiene ventas asociadas.');return;}if(!confirm(`¿Eliminar ${p.name} del inventario?`))return;products=products.filter(x=>x.id!==p.id);save();toast('Producto eliminado.');}
+  });
+  function startEdit(id){const p=products.find(x=>x.id===id);if(!p)return;editingProductId=id;$('productFormTitle').textContent='Editar producto';$('productName').value=p.name;$('productPrice').value=p.price;$('productStock').value=p.stock;$('productMin').value=p.min;$('saveProductBtn').textContent='Guardar cambios';$('cancelEdit').hidden=false;$('productForm').scrollIntoView({behavior:'smooth',block:'center'});}
+  function resetProductForm() {editingProductId=null;$('productForm').reset();$('productMin').value=5;$('productFormTitle').textContent='＋ Añadir producto';$('saveProductBtn').textContent='Guardar producto';$('cancelEdit').hidden=true;}
+  $('cancelEdit').addEventListener('click',resetProductForm);
+  $('productForm').addEventListener('submit',e=>{
+    e.preventDefault();const name=$('productName').value.trim(),price=Number($('productPrice').value),stock=Number($('productStock').value),min=Number($('productMin').value);
+    if(!name||price<0||stock<0||min<0||![price,stock,min].every(Number.isFinite)||!Number.isInteger(stock)||!Number.isInteger(min)){toast('Revisa los datos del producto.');return;}
+    const duplicate=products.find(p=>p.name.toLowerCase()===name.toLowerCase()&&p.id!==editingProductId);if(duplicate){toast('Ya existe un producto con ese nombre.');return;}
+    if(editingProductId){const p=products.find(x=>x.id===editingProductId);const oldName=p.name;p.name=name;p.price=price;p.stock=stock;p.min=min;if(oldName!==name)sales.forEach(s=>{if(s.product===oldName)s.product=name;});toast('Producto actualizado.');}
+    else{products.push({id:Date.now(),name,price,stock,min,emoji:'📦'});toast('Producto agregado al inventario.');}
+    resetProductForm();save();
+  });
+  function downloadCSV(filename,headers,rows){const csv=[headers,...rows].map(row=>row.map(v=>`"${String(v??'').replace(/"/g,'""')}"`).join(';')).join('\r\n');const blob=new Blob(['\ufeff'+csv],{type:'text/csv;charset=utf-8;'});const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download=filename;document.body.appendChild(a);a.click();a.remove();URL.revokeObjectURL(url);toast('Archivo CSV descargado.');}
+  function exportSales(){downloadCSV('analytics-nexus-ventas.csv',['Fecha','Producto','Cantidad','Precio unitario COP','Total COP'],sortedSales(sales).map(s=>[s.date,s.product,s.qty,s.price,saleTotal(s)]));}
+  function exportInventory(){downloadCSV('analytics-nexus-inventario.csv',['Producto','Precio COP','Existencias','Mínimo','Estado'],products.map(p=>[p.name,p.price,p.stock,p.min,statusFor(p)[0]]));}
+  $('exportTop').addEventListener('click',exportSales);$('exportSales').addEventListener('click',exportSales);$('reportSales').addEventListener('click',exportSales);$('exportInventory').addEventListener('click',exportInventory);$('reportInventory').addEventListener('click',exportInventory);
+  $('dateFrom').addEventListener('change',renderDashboard);$('dateTo').addEventListener('change',renderDashboard);$('clearDates').addEventListener('click',()=>{$('dateFrom').value='';$('dateTo').value='';renderDashboard();});
+  $('resetDemo').addEventListener('click',()=>{if(!confirm('Esto reemplazará ventas y productos guardados en este navegador por los datos de demostración. ¿Continuar?'))return;products=seedProducts.map(p=>({...p}));sales=sampleSales();persist();resetProductForm();renderAll();toast('Datos de ejemplo restaurados.');gotoPage('dashboard');});
+  $('todayLabel').textContent=new Intl.DateTimeFormat('es-CO',{day:'numeric',month:'short',year:'numeric'}).format(new Date());$('year').textContent=new Date().getFullYear();$('saleDate').value=todayISO();
+  renderAll();
+})();
+</script>
+</body>
+</html>
